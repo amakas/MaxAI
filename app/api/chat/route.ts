@@ -14,7 +14,7 @@ export async function POST(req: Request) {
   const systemPrompt = `${prompt} `;
   const messages = [{ role: "system", content: systemPrompt }, ...userMessages];
   const stream = await openrouter.chat.send({
-    model: "mistralai/devstral-2512:free",
+    model: "tngtech/deepseek-r1t2-chimera:free",
     messages,
     stream: true,
   });
