@@ -225,6 +225,9 @@ export const Chat = ({
             Friendly
           </option>
           <option value={"Be angry and hatefull to user"}>Angry</option>
+          <option value={"Use brainrot words and memes, be like idiot teen"}>
+            Skibidy
+          </option>
         </select>
       </div>
     </div>
