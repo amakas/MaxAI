@@ -1,0 +1,139 @@
+.main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+
+.chat {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 70%;
+  border-top: 1px solid grey;
+  line-height: 20px;
+}
+.messages-container {
+  height: 650px;
+  width: 95%;
+  max-width: 700px;
+
+  border-radius: 20px;
+  padding: 10px;
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+
+  gap: 20px;
+}
+
+.message {
+  display: flex;
+  flex-direction: column;
+}
+.my {
+  text-align: right;
+  display: flex;
+  align-items: end;
+}
+
+.ai {
+  text-align: left;
+  display: flex;
+  align-items: start;
+}
+
+.date {
+  font-size: small;
+}
+.content {
+  font-size: 16px;
+  width: fit-content;
+  max-width: 80%;
+  background-color: hsla(180, 83%, 2%, 0.29);
+  padding: 10px;
+  border-radius: 20px;
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+}
+.input-send {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 50%;
+  max-width: 600px;
+}
+
+.send-button {
+  background-color: hsl(241, 41%, 53%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5px;
+  width: 8%;
+  min-width: 30px;
+  height: 40px;
+  font-weight: bold;
+  font-size: 16px;
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+  color: white;
+  border-radius: 50%;
+  cursor: pointer;
+  &:hover {
+    filter: brightness(0.9);
+  }
+}
+
+.input {
+  border-radius: 20px;
+  padding: 10px;
+  background-color: rgb(118, 201, 211);
+  width: 85%;
+}
+
+.temper {
+  margin: 20px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  & p {
+    font-size: medium;
+  }
+}
+select {
+  margin: 10px;
+  background-color: yellowgreen;
+  font-size: medium;
+}
+
+.main-message {
+  margin: auto;
+}
+
+.signInButton,
+.signOutButton {
+  position: fixed;
+  top: 20px;
+  right: 50px;
+  border-radius: 20px;
+  padding: 7px;
+  color: white;
+  cursor: pointer;
+  &:hover {
+    filter: brightness(0.9);
+  }
+}
+
+.signOutButton {
+  background-color: rgb(214, 47, 47);
+}
+
+.signInButton {
+  background-color: rgb(33, 131, 81);
+}

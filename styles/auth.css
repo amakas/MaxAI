@@ -1,0 +1,26 @@
+.auth-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  gap: 20px;
+  font-size: larger;
+}
+
+.login,
+.signin {
+  height: 30%;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+  padding: 10px;
+  border: 1px solid white;
+}
+
+label {
+  text-align: start;
+  width: 100%;
+}
