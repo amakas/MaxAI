@@ -1,35 +1,33 @@
 .sidebar {
   position: fixed;
   left: 0;
-  top: 0;
+  top: 132px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
-  width: 20%;
-
-  margin-top: 130px;
-  max-height: 80%;
+  width: 200px;
+  background-color: rgb(16, 16, 81);
+  height: 100%;
   overflow: scroll;
   overflow-x: hidden;
-  &::-webkit-scrollbar {
-    width: 5px;
-  }
-  &::-webkit-scrollbar-thumb {
-    border-radius: 5px;
-    background-color: #959494;
-  }
-}
 
+  z-index: 1000;
+}
+.rooms {
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+}
 .room {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  width: 70%;
-  height: 10%;
+  width: 90%;
+  height: auto;
   cursor: pointer;
-  padding: 10px;
+  padding: 5px;
   border-radius: 10px;
   margin: 5px;
   font-size: 18px;
@@ -59,8 +57,85 @@
   cursor: pointer;
   color: white;
   margin: 10px;
+  margin-left: 50px;
   &:hover {
     background-color: hsl(240, 57%, 35%);
     color: rgb(255, 255, 255);
+  }
+}
+
+.burger {
+  width: 30px;
+  height: 25px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  background: none;
+  border: none;
+  cursor: pointer;
+  position: fixed;
+  left: 20px;
+  top: 15px;
+  margin-bottom: 5px;
+}
+
+.burger span {
+  height: 3px;
+  background: white;
+  border-radius: 2px;
+  transition: 0.3s;
+}
+.op span:nth-child(1) {
+  transform: rotate(45deg) translate(5px, 5px);
+}
+.op span:nth-child(2) {
+  opacity: 0;
+}
+.op span:nth-child(3) {
+  transform: rotate(-45deg) translate(5px, -5px);
+}
+.sidebar.show {
+  transform: translateX(0);
+}
+
+.sidebar.closing {
+  transform: translateX(-100%);
+}
+
+.open {
+  position: fixed;
+  left: 20px;
+  top: 145px;
+  display: flex;
+}
+
+.hide {
+  display: none;
+}
+
+.popup {
+  position: fixed;
+  top: 50px;
+  left: 40vw;
+  background-color: rgb(18, 85, 63);
+  z-index: 1001;
+
+  padding: 20px;
+  font-size: 18px;
+}
+
+.link {
+  text-decoration: none;
+  color: rgb(75, 146, 208);
+}
+
+@media (max-width: 600) {
+  .sidebar {
+    width: 150px;
+
+    font-size: 12px;
+  }
+  .newChatButton {
+    padding: 10px 5px;
   }
 }

@@ -11,7 +11,7 @@ import {
 } from "firebase/firestore";
 import { User } from "firebase/auth";
 
-type Role = "user" | "assistant";
+type Role = string;
 interface Message {
   role: Role;
   content: string;
@@ -50,47 +50,115 @@ export const Chat = ({
     const room = rooms.find((r) => r.id === activeRoom.id);
     if (!room) return;
 
-    setMessages(room.messages ?? []);
+    setMessages((room.messages ?? []) as Message[]);
   }, [activeRoom, rooms]);
 
   //user type something to ai
-  const handleClick = async () => {
-    if (!text) return;
+  const askAI = async (messages: Message[]) => {
+    const res = await fetch("/api/chat", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ messages, prompt }),
+    });
 
-    let room = activeRoom;
-    if (!room) {
-      const roomDoc = await addDoc(roomsCollection, {
-        userId: auth.currentUser!.uid,
-        title: "New Chat",
-        titleGenerated: false,
-        messages: [],
-      });
-      room = {
-        id: roomDoc.id,
-        userId: user.uid,
-        title: "New chat",
-        titleGenerated: false,
-        messages: [],
-      };
-      setActiveRoom(room);
+    if (!res.ok) throw new Error("Request failed");
+
+    const reader = res.body?.getReader();
+    let done = false;
+    let content = "";
+
+    const aiMessage: Message = { role: "assistant", content: "" };
+    setMessages((prev) => [...prev, aiMessage]);
+
+    while (!done) {
+      const { value, done: readerDone } = await reader!.read();
+      done = readerDone;
+
+      if (value) {
+        const chunk = new TextDecoder().decode(value);
+
+        for (const char of chunk) {
+          content += char;
+
+          setMessages((prev) => {
+            const last = [...prev];
+            last[last.length - 1] = {
+              ...last[last.length - 1],
+              content,
+              role: "assistant",
+            };
+            return last;
+          });
+        }
+      }
     }
 
-    const roomId = room.id;
-    if (!roomId) return;
+    return content;
+  };
+  const handleClick = async () => {
+    if (!text || loading) return;
+
     setLoading(true);
-    const message: Message = {
+
+    const userMessage: Message = {
       role: "user",
       content: text,
     };
-    const updatedMessages = [...messages, message];
-    setMessages(updatedMessages);
 
-    await updateDoc(doc(db, "rooms", roomId), {
-      messages: updatedMessages,
-    });
+    const updatedMessages = [...messages, userMessage];
+    setMessages(updatedMessages);
     setText("");
 
     try {
+      // =========================
+      // GUEST MODE (no user)
+      // =========================
+      if (!user) {
+        const aiContent = await askAI(updatedMessages);
+
+        const finalMessages = [
+          ...updatedMessages,
+          { role: "assistant", content: aiContent },
+        ];
+
+        setMessages(finalMessages);
+        return; // ВАЖЛИВО: не йдемо в Firebase
+      }
+
+      // =========================
+      // AUTH MODE (user exists)
+      // =========================
+
+      let room = activeRoom;
+
+      // якщо кімнати ще нема — створюємо
+      if (!room) {
+        const roomDoc = await addDoc(roomsCollection, {
+          userId: user.uid,
+          title: "New Chat",
+          titleGenerated: false,
+          messages: [],
+        });
+
+        room = {
+          id: roomDoc.id,
+          userId: user.uid,
+          title: "New Chat",
+          titleGenerated: false,
+          messages: [],
+        };
+
+        setActiveRoom(room);
+      }
+
+      const roomId = room.id!;
+
+      // зберігаємо user message
+      await updateDoc(doc(db, "rooms", roomId), {
+        messages: updatedMessages,
+      });
+
+      // генеруємо title тільки на першому повідомленні
       if (messages.length === 0) {
         const titleRes = await fetch("/api/room-title", {
           method: "POST",
@@ -99,62 +167,32 @@ export const Chat = ({
             firstMessage: text,
           }),
         });
+
         const data = await titleRes.json();
-        const title = data.title;
+
         await updateDoc(doc(db, "rooms", roomId), {
-          title,
+          title: data.title,
           titleGenerated: true,
         });
-        getRooms(auth.currentUser!.uid);
+
+        getRooms(user.uid);
       }
-      const res = await fetch("/api/chat", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ messages: [...messages, message], prompt }),
-      });
-      if (!res.ok) throw new Error("Request failed");
 
-      const aiMessage: Message = { role: "assistant", content: "" };
-      setMessages((prev) => [...prev, aiMessage]);
+      // AI response
+      const aiContent = await askAI(updatedMessages);
 
-      const reader = res.body?.getReader();
-      let done = false;
-      let content = "";
-      while (!done) {
-        const { value, done: readerDone } = await reader!.read();
-        done = readerDone;
-        if (value) {
-          const chunk = new TextDecoder().decode(value);
-          for (const char of chunk) {
-            content += char;
-
-            setMessages((prev) => {
-              const last = [...prev];
-              last[last.length - 1] = {
-                ...last[last.length - 1],
-                content,
-                role: "assistant",
-              };
-              return last;
-            });
-            await new Promise((res) => setTimeout(res, 20));
-          }
-        }
-      }
-      const aiMes: Message = {
-        role: "assistant",
-        content,
-      };
-
-      const finalMessages = [...updatedMessages, aiMes];
+      const finalMessages = [
+        ...updatedMessages,
+        { role: "assistant", content: aiContent },
+      ];
 
       setMessages(finalMessages);
 
       await updateDoc(doc(db, "rooms", roomId), {
         messages: finalMessages,
       });
-    } catch (error) {
-      console.error(error);
+    } catch (err) {
+      console.error(err);
     } finally {
       setLoading(false);
     }

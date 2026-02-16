@@ -24,3 +24,15 @@ label {
   text-align: start;
   width: 100%;
 }
+input {
+  padding: 3px;
+}
+.signinbut,
+.signGoogle {
+  cursor: pointer;
+  padding: 3px;
+  border-radius: 0;
+  &:hover {
+    filter: brightness(1.2);
+  }
+}

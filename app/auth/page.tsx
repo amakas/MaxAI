@@ -24,8 +24,10 @@ export default function Auth() {
     }
   };
   const handleAuth = async () => {
+    if (!email || !password) return;
     try {
       await createUserWithEmailAndPassword(auth, email, password);
+
       router.push("/");
     } catch (error) {
       console.error(error);
@@ -59,10 +61,14 @@ export default function Auth() {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
-        <button type="submit">SignIn</button>
+        <button className="signinbut" type="submit">
+          SignIn
+        </button>
       </form>
 
-      <button onClick={signInWithGoogle}>Sign in with Google</button>
+      <button className="signGoogle" onClick={signInWithGoogle}>
+        Sign in with Google
+      </button>
     </div>
   );
 }
