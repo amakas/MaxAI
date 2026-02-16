@@ -10,7 +10,7 @@ export async function POST(req: Request) {
   const { roomId, firstMessage, userId } = await req.json();
 
   const completion = await openrouter.chat.send({
-    model: "tngtech/deepseek-r1t2-chimera:free",
+    model: "openrouter/aurora-alpha",
     messages: [
       {
         role: "system",

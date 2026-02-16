@@ -14,7 +14,7 @@ export async function POST(req: Request) {
   const systemPrompt = `${prompt} `;
   const messages = [{ role: "system", content: systemPrompt }, ...userMessages];
   const stream = await openrouter.chat.send({
-    model: "tngtech/deepseek-r1t2-chimera:free",
+    model: "openrouter/aurora-alpha",
     messages,
     stream: true,
   });

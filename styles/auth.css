@@ -27,12 +27,28 @@ label {
 input {
   padding: 3px;
 }
+
+.buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  align-items: center;
+  justify-content: space-between;
+}
 .signinbut,
-.signGoogle {
+.signGoogle,
+.switch {
   cursor: pointer;
   padding: 3px;
   border-radius: 0;
   &:hover {
     filter: brightness(1.2);
   }
+}
+
+.error-message {
+  position: fixed;
+  top: 40px;
+  width: 100%;
+  text-align: center;
 }

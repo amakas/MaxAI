@@ -24,7 +24,7 @@ export default function Home() {
 
     return () => unsubscribe();
   }, []);
-  console.log(user);
+
   const roomsCollection = collection(db, "rooms");
   const getRooms = async (uid?: string) => {
     try {
@@ -37,7 +37,6 @@ export default function Home() {
         ...doc.data(),
       }));
 
-      console.log(filteredData);
       setRooms(filteredData);
     } catch (err) {
       console.error(err);
