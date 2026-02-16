@@ -38,7 +38,8 @@ NEXT_PUBLIC_FIREBASE_PROJECT_ID=...
 NEXT_PUBLIC_FIREBASE_APP_ID=...
 ```
 
-```Run Locally
+Run Locally
+```
 npm install
 npm run dev
 ```
