@@ -26,21 +26,4 @@ Simple full-stack AI chat application demonstrating authentication, database int
 
 ---
 
-## 🔐 Environment Variables
-
-Create `.env.local`:
-
-```env
-OPENROUTER_KEY=your_key
-NEXT_PUBLIC_FIREBASE_API_KEY=...
-NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=...
-NEXT_PUBLIC_FIREBASE_PROJECT_ID=...
-NEXT_PUBLIC_FIREBASE_APP_ID=...
-```
-
-Run Locally
-```
-npm install
-npm run dev
-```
 
