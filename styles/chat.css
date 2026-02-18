@@ -13,7 +13,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 70%;
+  height: 80%;
   border-top: 1px solid grey;
   line-height: 20px;
 }
@@ -102,14 +102,19 @@
   flex-direction: row;
   align-items: center;
   justify-content: center;
+
   & p {
-    font-size: medium;
+    font-size: large;
   }
 }
 select {
   margin: 10px;
-  background-color: yellowgreen;
+  background-color: rgb(21, 24, 108);
   font-size: medium;
+  padding: 2px;
+  border-radius: 25px;
+  border: none;
+  color: white;
 }
 
 .main-message {

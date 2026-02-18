@@ -91,7 +91,7 @@ export const SideBar = ({
   const handleDelete = async (id: string) => {
     await deleteDoc(doc(db, "rooms", id));
     getRooms(user.uid);
-    setActiveRoom(null);
+    if (activeRoom?.id === id) setActiveRoom(null);
   };
   return (
     <div ref={navRef}>

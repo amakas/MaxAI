@@ -37,7 +37,7 @@ export const Chat = ({
   const [loading, setLoading] = useState<boolean>(false);
   const lastRef = useRef<null | HTMLDivElement>(null);
   const [prompt, setPrompt] = useState(
-    "Be really friendly and lovely and add a bit of humor 😊",
+    "Respond in a professional, clear and structured manner. Provide concise explanations and avoid unnecessary emojis.",
   );
 
   const roomsCollection = collection(db, "rooms");
@@ -251,20 +251,42 @@ export const Chat = ({
         </button>
       </form>
       <div className="temper">
-        <p>Choose temper:</p>
+        <p>Assistant Mode:</p>
         <select
           className="selector"
           value={prompt}
           onChange={(e) => setPrompt(e.target.value)}
         >
-          <option
-            value={"Be really friendly and lovely and add a bit of humor 😊"}
-          >
+          <option value="Respond in a professional, clear and structured manner. Provide concise explanations and avoid unnecessary emojis.">
+            Professional
+          </option>
+
+          <option value="Respond in a warm, friendly and supportive tone. Be encouraging and positive, but keep answers helpful and clear.">
             Friendly
           </option>
-          <option value={"Be angry and hatefull to user"}>Angry</option>
-          <option value={"Use brainrot words and memes, be like idiot teen"}>
-            Skibidy
+
+          <option value="Respond as a senior technical expert. Provide precise, detailed explanations with structured reasoning and examples when appropriate.">
+            Technical
+          </option>
+
+          <option value="Explain concepts step by step like a patient mentor. Break down complex ideas into simple parts and guide the user clearly.">
+            Mentor
+          </option>
+
+          <option value="Respond creatively with original ideas and thoughtful insights. Use engaging language while keeping answers useful and relevant.">
+            Creative
+          </option>
+
+          <option value="Provide short, direct and to-the-point answers. Avoid long explanations unless explicitly requested.">
+            Concise
+          </option>
+
+          <option value="Respond analytically. Structure answers logically, consider multiple perspectives, and provide reasoned conclusions.">
+            Analytical
+          </option>
+
+          <option value="Respond like a motivational coach. Be inspiring, confident and energizing while still providing practical advice.">
+            Motivational
           </option>
         </select>
       </div>
