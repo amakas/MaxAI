@@ -14,7 +14,7 @@ export async function POST(req: Request) {
   const systemPrompt = `${prompt} `;
   const messages = [{ role: "system", content: systemPrompt }, ...userMessages];
   const stream = await openrouter.chat.send({
-    model: "openrouter/aurora-alpha",
+    model: "nvidia/nemotron-3-super-120b-a12b:free",
     messages,
     stream: true,
   });

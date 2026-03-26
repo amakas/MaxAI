@@ -10,7 +10,7 @@ export async function POST(req: Request) {
   const { roomId, firstMessage, userId } = await req.json();
 
   const completion = await openrouter.chat.send({
-    model: "openrouter/aurora-alpha",
+    model: "nvidia/nemotron-3-super-120b-a12b:free",
     messages: [
       {
         role: "system",
