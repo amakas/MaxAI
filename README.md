@@ -2,6 +2,8 @@
 
 Simple full-stack AI chat application demonstrating authentication, database integration, streaming responses, and dynamic UI state management. Built with **Next.js**, **Firebase**, and **OpenRouter**.
 
+## Demo
+🔗 [Live Demo] (https://max-ai21.vercel.app/)
 ---
 
 ## 🚀 Features
